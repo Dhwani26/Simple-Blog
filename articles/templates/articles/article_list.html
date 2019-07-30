@@ -1,0 +1,15 @@
+{% extends 'base_layout.html' %}
+<!-- this is the concept of extending templates-->
+{% block content %}
+        <h1>Article list</h1>
+        <div class = 'articles'>
+            {% for i in articles %} <!-- here articles refers to the key value in the dictionary --> 
+                <div class = "article">
+                    <h2><a href = "{% url 'articles:detail' slug=i.slug %}">{{i.title}}</a></h2>
+                    <p>{{i.snippet}}</p>
+                    <p>{{i.date}}</p>
+                    <p class = 'author'>Added by - {{i.author.username}}</p>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

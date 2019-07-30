@@ -1,0 +1,41 @@
+<!-- to imclude static files use static module which comes with django itslef. 
+this is done so further changes to STATIC_URL wont affect this file -->
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Articles</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <!-- individual content of each page will be written inside the block-->
+        <header class = "wrapper">
+            <h1><a href="{% url 'home' %}"><img src="{% static 'logo.png' %}"/></a></h1>
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <form class="logout-link" action = "{% url 'accounts:logout' %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit">Logout</button>
+                            </form>
+                        </li>
+                        </li><a href = "{% url 'articles:create' %}" class = 'highlight'>New Aricle</a></li>
+                    {% else %}
+                        <li>
+                            <a href = "{% url 'accounts:login' %}">Login</a>
+                        </li>
+                        <li>
+                            <a href = "{% url 'accounts:signup' %}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <div class = 'wrapper'>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>
